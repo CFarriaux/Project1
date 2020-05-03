@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Book
+{% endblock %}
+
+{% block topnav %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('index') }}">Account</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('api') }}">API</a>
+    </li>
+{% endblock %}
+
+{% block logout %}
+    <form class="form-inline my-2 my-lg-0" action="{{ url_for('login') }}" method="post">
+        <button class="btn btn btn-outline-light my-2 my-sm-0" type="submit" name="logout">Logout</button>
+    </form>
+{% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron text-center bg-transparent">
+        <h1 class="display-4">{{ book.title }}</h1>
+        <p class="lead">{{ book.author}} | Published {{ book.year}}</p>
+        <hr class="my-4">
+        <p>Goodreads: {{ score }} average ({{ ratings_count }} ratings)</p>
+        <h6><span class="badge badge-light">ISBN: {{ book.isbn }}</span></h6>
+    </div>
+
+    <h2 class="mt-4">Leave a review</h2>
+
+    <form action="{{ url_for('review', book_id=book.id) }}" method="post">
+        <div class="row">
+          <div class="form-group col-md-8">
+            <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Your review"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-2">
+            <input type="number" class="form-control" id="score" name="score" placeholder="Score from 1 to 5">
+          </div>
+          <div class="col">
+            <button type="submit" class="btn btn-primary mb-2">Save review</button>
+          </div>
+        </div>
+    </form>
+
+    <h2 class="mt-4">Reviews</h2>
+    {% for review in reviews %}
+        <div class="card w-75 mb-3">
+            <div class="card-header border-0">
+                {{ user.username }}  
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Score: {{ review.score }}</h5>
+                <blockquote class="blockquote mb-0">
+                    <p>{{ review.comment }}</p>
+                    <footer class="blockquote-footer">{{ review.date_posted }}</footer>
+                </blockquote>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-light" role="alert">
+            No reviews.
+        </div>
+    {% endfor %}
+
+{% endblock %}

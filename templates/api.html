@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Book
+{% endblock %}
+
+{% block topnav %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('index') }}">Account</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('api') }}">API</a>
+    </li>
+{% endblock %}
+
+{% block logout %}
+    <form class="form-inline my-2 my-lg-0" action="{{ url_for('login') }}" method="post">
+        <button class="btn btn btn-outline-light my-2 my-sm-0" type="submit" name="logout">Logout</button>
+    </form>
+{% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron text-center bg-transparent">
+        <h1 class="display-4">Chocobooks API</h1>
+        <p class="lead">How to get access to our review data</p>
+        <hr class="my-4">
+        <h3>Accessing the API</h3>
+        <p>Access book information at the following url:</p>
+        <div class="card p-2 ml-5 mr-5 mt-2 mb-2">
+            http://127.0.0.1:5000/api/books/isbn
+        </div>
+        <p class="text-info">Note: You must be logged in to access the API</p>
+        <h3>API data format</h3>
+        <p>You will receive the data in the following format:</p>
+        <div class="card p-2 ml-5 mr-5 mt-2 mb-2">
+            {
+                "title": "Memory",
+                "author": "Doug Lloyd",
+                "year": 2015,
+                "isbn": "1632168146",
+                "review_count": 28,
+                "average_score": 5.0
+            }
+        </div>
+        <p class="text-info">Note: When no reviews are available, "average_score" will return "N/A"</p>
+    </div>
+
+{% endblock %}
