@@ -3,3 +3,4 @@ Flask-Session
 psycopg2-binary
 SQLAlchemy
 gunicorn==19.10.0
+requests
